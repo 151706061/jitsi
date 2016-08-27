@@ -119,6 +119,20 @@ public class ColibriBuilder
     private SimulcastMode simulcastMode;
 
     /**
+     * Specifies the audio packet delay that will be set on all created audio
+     * channels. When set to <tt>null</tt> the builder will clear the attribute
+     * which stands for 'undefined'.
+     **/
+    private Integer audioPacketDelay;
+
+    /**
+     * Channel 'rtp-level-relay-type' option that will be used with all created
+     * audio channel. Possible values: mixer or translator (default).
+     *
+     */
+    private RTPLevelRelayType rtpLevelRelayType;
+
+    /**
      * Creates new instance of {@link ColibriBuilder} for given
      * <tt>conferenceState</tt>.
      *
@@ -221,6 +235,13 @@ public class ColibriBuilder
                 remoteRtpChannelRequest.setAdaptiveLastN(adaptiveLastN);
                 remoteRtpChannelRequest.setAdaptiveSimulcast(adaptiveSimulcast);
                 remoteRtpChannelRequest.setSimulcastMode(simulcastMode);
+                if (MediaType.AUDIO.equals(mediaType))
+                {
+                    // When audioPacketDelay is null it will clear the attribute
+                    remoteRtpChannelRequest.setPacketDelay(audioPacketDelay);
+                    // Set rtp packet relay type for this channel
+                    remoteRtpChannelRequest.setRTPLevelRelayType(rtpLevelRelayType);
+                }
             }
 
             // Copy transport
@@ -960,6 +981,28 @@ public class ColibriBuilder
     }
 
     /**
+     * Returns an <tt>Integer</tt> which stands for the audio packet delay
+     * that will be set on all created audio channels or <tt>null</tt> if
+     * the builder should leave not include the XML attribute at all.
+     */
+    public Integer getAudioPacketDelay()
+    {
+        return audioPacketDelay;
+    }
+
+    /**
+     * Configures audio channels packet delay.
+     * @param audioPacketDelay an <tt>Integer</tt> value which stands for
+     * the audio packet delay that will be set on all created audio channels or
+     * <tt>null</tt> if the builder should not set that channel property to any
+     * value.
+     */
+    public void setAudioPacketDelay(Integer audioPacketDelay)
+    {
+        this.audioPacketDelay = audioPacketDelay;
+    }
+
+    /**
      * Sets channel 'simulcast-mode' option that will be added to the
      * request when channels are created.
      * @param simulcastMode a <tt>SimulcastMode</tt> value to specify
@@ -1059,4 +1102,28 @@ public class ColibriBuilder
          */
         UNDEFINED;
     }
+
+    /**
+     * Configures RTP-level relay (RFC 3550, section 2.3).
+     * @param rtpLevelRelayType an <tt>RTPLevelRelayType</tt> value which
+     * stands for the rtp level relay type that will be set on all created
+     * audio channels.
+     */
+    public void setRTPLevelRelayType(RTPLevelRelayType rtpLevelRelayType)
+    {
+        this.rtpLevelRelayType = rtpLevelRelayType;
+    }
+
+    /**
+     * Configures RTP-level relay (RFC 3550, section 2.3).
+     * @param rtpLevelRelayType a <tt>String</tt> value which
+     * stands for the rtp level relay type that will be set on all created
+     * audio channels.
+     */
+    public void setRTPLevelRelayType(String rtpLevelRelayType)
+    {
+        setRTPLevelRelayType
+                (RTPLevelRelayType.parseRTPLevelRelayType(rtpLevelRelayType));
+    }
+
 }

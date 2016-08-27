@@ -21,7 +21,7 @@ Requires: java >= 0:1.6
 
 %description
 Jitsi (formerly SIP Communicator) is an audio/video and chat communicator
-that supports protocols such as SIP, XMPP/Jabber, AIM/ICQ, Windows Live,
+that supports protocols such as SIP, XMPP/Jabber, AIM/ICQ, IRC,
 Yahoo! and many other useful features.
 
 %define debug_package %{nil}
@@ -113,6 +113,7 @@ sed -i -e "s/\/usr\/lib\/jni/\$LIBPATH\/native/" $RPM_BUILD_ROOT/usr/bin/jitsi
 sed -i -e "s/\/usr\/share\/java\/jdic\.jar/\$LIBPATH\/jdic_stub\.jar:\$LIBPATH\/jdic-all\.jar/" $RPM_BUILD_ROOT/usr/bin/jitsi
 sed -i -e "s/\/usr\/share\/java\/org\.apache\.felix\.framework\.jar/\$LIBPATH\/felix\.jar/" $RPM_BUILD_ROOT/usr/bin/jitsi
 sed -i -e "s/\/usr\/share\/java\/org\.apache\.felix\.main\.jar://" $RPM_BUILD_ROOT/usr/bin/jitsi
+sed -i -e "s/\/usr\/share\/java\/dnsjava\.jar://" $RPM_BUILD_ROOT/usr/bin/jitsi
 sed -i -e "s/\/launchutils.jar//" $RPM_BUILD_ROOT/usr/bin/jitsi
 
 %clean
