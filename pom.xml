@@ -379,6 +379,50 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.5.3</version>
+        <configuration>
+          <!--
+            Several modules ship OSGi LICK/Slick-style integration tests
+            (paired with *Lick.java / *SlickFixture.java). Their
+            BundleContext is only populated when the bundle is started
+            inside an OSGi runtime; there is no OSGi container wired up
+            for the Maven build, so running them via plain Surefire NPEs
+            in setUp/constructor. Exclude them globally until an
+            OSGi-based test runner is reintroduced.
+          -->
+          <excludes>
+            <exclude>TestAccountInstallation.java</exclude>
+            <exclude>TestAccountUninstallation.java</exclude>
+            <exclude>TestAccountUninstallationPersistence.java</exclude>
+            <exclude>TestAutoProxyDetection.java</exclude>
+            <exclude>TestCallHistoryService.java</exclude>
+            <exclude>TestCredentialsStorageService.java</exclude>
+            <exclude>TestHistoryService.java</exclude>
+            <exclude>TestMetaContact.java</exclude>
+            <exclude>TestMetaContactGroup.java</exclude>
+            <exclude>TestMetaContactList.java</exclude>
+            <exclude>TestMetaContactListPersistence.java</exclude>
+            <exclude>TestMetaHistoryService.java</exclude>
+            <exclude>TestMsgHistoryService.java</exclude>
+            <exclude>TestMsgHistoryServiceMultiChat.java</exclude>
+            <exclude>TestOperationSetBasicInstantMessaging.java</exclude>
+            <exclude>TestOperationSetBasicTelephonyJabberImpl.java</exclude>
+            <exclude>TestOperationSetBasicTelephonySipImpl.java</exclude>
+            <exclude>TestOperationSetFileTransferImpl.java</exclude>
+            <exclude>TestOperationSetInstantMessageTransformJabberImpl.java</exclude>
+            <exclude>TestOperationSetMultiUserChat.java</exclude>
+            <exclude>TestOperationSetMultiUserChat2.java</exclude>
+            <exclude>TestOperationSetPersistentPresence.java</exclude>
+            <exclude>TestOperationSetPresence.java</exclude>
+            <exclude>TestOperationSetServerStoredInfo.java</exclude>
+            <exclude>TestOperationSetServerStoredInfoData.java</exclude>
+            <exclude>TestOperationSetTypingNotifications.java</exclude>
+            <exclude>TestProtocolProviderServiceGibberishImpl.java</exclude>
+            <exclude>TestProtocolProviderServiceJabberImpl.java</exclude>
+            <exclude>TestProtocolProviderServiceSipImpl.java</exclude>
+            <exclude>TestSupportForMultipleProviders.java</exclude>
+            <exclude>TestXCapParse.java</exclude>
+          </excludes>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
