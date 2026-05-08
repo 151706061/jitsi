@@ -135,11 +135,12 @@ jobs:
       - name: Install tools
         run: |
           # No need for updated man pages on GitHub
-          sudo rm /var/lib/man-db/auto-update
+          sudo rm -f /var/lib/man-db/auto-update
           resources/deb-prepare.sh
           sudo ln -s ~/.m2/repository /var/cache/m2-sbuild
 
       - name: Import GPG key
+        if: github.ref == 'refs/heads/master'
         env:
           GPG_PASSPHRASE: "${{ secrets.GPG_PW }}"
         run: |
@@ -175,7 +176,7 @@ jobs:
             "${{ needs.version.outputs.jitsi_version_deb }}" \
             "${{ matrix.dist.dist }}" \
             "${{ matrix.arch }}" \
-            "dev+maven@jitsi.org"
+            "${{ github.ref == 'refs/heads/master' && 'dev+maven@jitsi.org' || '' }}"
 
       - name: make build files readable for Windows and archivable for GitHub Actions
         if: ${{ always() }}
