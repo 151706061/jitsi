@@ -81,7 +81,9 @@ else
   cp "${PROJECT_DIR}"/../jitsi_* "$BUILD_DIR"
 fi
 
-debsign -S -e"${GPG_ID}" "${BUILD_DIR}"/*.changes --re-sign -p"${PROJECT_DIR}"/resources/gpg-wrap.sh
+if [[ -n "${GPG_ID}" ]]; then
+  debsign -S -e"${GPG_ID}" "${BUILD_DIR}"/*.changes --re-sign -p"${PROJECT_DIR}"/resources/gpg-wrap.sh
+fi
 
 #make build files readable for Windows and archivable for GitHub Actions
 rename 's|:|-|g' "$BUILD_DIR"/*.build
