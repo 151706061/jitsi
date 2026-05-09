@@ -85,6 +85,9 @@ jobs:
           path: target/native
 
   deb:
+    # Disabled until the apt repo at nexus.ingo.ch is seeded with noble/plucky
+    # dists and the cross-arch build resolver issue is sorted.
+    if: false
     name: ${{ matrix.dist.vendor }} ${{ matrix.dist.dist }} ${{ matrix.arch }}
     runs-on: ubuntu-latest
     needs:
