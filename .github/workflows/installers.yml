@@ -152,9 +152,9 @@ jobs:
         id: chroot_cache
         with:
           path: target/chroot
-          key: chroot-${{ matrix.dist.dist }}-${{ matrix.arch }}-${{ hashFiles('target/chroot/**') }}
+          key: chroot-v2-${{ matrix.dist.dist }}-${{ matrix.arch }}-${{ hashFiles('target/chroot/**') }}
           restore-keys: |
-            chroot-${{ matrix.dist.dist }}-${{ matrix.arch }}-
+            chroot-v2-${{ matrix.dist.dist }}-${{ matrix.arch }}-
 
       - name: Move chroot from cache
         if: steps.chroot_cache.outputs.cache-hit

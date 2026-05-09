@@ -36,7 +36,7 @@ SBUILD_ARGS=(\
 if [[ "${ARCH}" != "amd64" ]]; then
   SBUILD_ARGS+=(--host="${ARCH}")
   if [ ! -f /var/lib/schroot/tarballs/"${DIST}"-amd64-"${ARCH}".tgz ]; then
-    mk-sbuild "${DIST}" --target "${ARCH}" --type=file || true
+    mk-sbuild "${DIST}" --target "${ARCH}" --type=file --debootstrap-include=ca-certificates || true
   fi
 
   # union-type= is not valid for type=file, remove to prevent warnings
@@ -63,7 +63,7 @@ else
   fi
 
   if [ ! -f /var/lib/schroot/tarballs/"${DIST}"-amd64.tgz ]; then
-    mk-sbuild "${DIST}" --type=file || true
+    mk-sbuild "${DIST}" --type=file --debootstrap-include=ca-certificates || true
   fi
 
   # union-type= is not valid for type=file, remove to prevent warnings
