@@ -36,4 +36,4 @@ jobs:
 
       - name: Build Java source with Maven
         run: |
-          mvn -B verify -DperformRelease=true -DskipTests
+          mvn -B verify -DperformRelease=true

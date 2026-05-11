@@ -17,6 +17,7 @@
  */
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 
 import java.io.*;
 import java.net.*;
@@ -28,6 +29,8 @@ public class Win32LocalhostTest
     @Test
     public void testBestAdapterRoute() throws IOException
     {
+        assumeTrue("Win32-specific test, skipping on non-Windows",
+            System.getProperty("os.name", "").toLowerCase().startsWith("windows"));
         InetAddress localhost = Win32LocalhostRetriever
             .getSourceForDestination(InetAddress.getLoopbackAddress());
         assertEquals(InetAddress.getLoopbackAddress(), localhost);
